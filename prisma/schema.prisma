@@ -1,6 +1,7 @@
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 generator client {
@@ -27,7 +28,7 @@ model User {
 
 model Issue {
   id               String          @id @default(cuid())
-  ticketNumber     String          @unique // e.g. CIVIC-2026-1001
+  ticketNumber     String          @unique // e.g. CIVIC-BLR-1001
   title            String
   description      String
   category         String          // "ROADS", "SANITATION", "WATER_DRAINAGE", "ELECTRICITY", "OTHER"
@@ -60,7 +61,7 @@ model IssueTimeline {
   issue      Issue    @relation(fields: [issueId], references: [id], onDelete: Cascade)
   fromStatus String?
   toStatus   String
-  action     String   // e.g. "Complaint registered", "Assigned to Roads Dept", "Work commenced", "Resolved"
+  action     String   // e.g. "Grievance registered", "Assigned to BBMP Roads", "Work commenced", "Resolved"
   note       String?
   actorName  String
   createdAt  DateTime @default(now())
@@ -84,7 +85,7 @@ model Comment {
   userId     String
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   content    String
-  isInternal Boolean  @default(false) // Official internal note vs public comment
+  isInternal Boolean  @default(false) // Official internal note vs public citizen comment
   createdAt  DateTime @default(now())
 }
 
