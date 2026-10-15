@@ -19,10 +19,12 @@
 
 # Local env files
 .env*.local
+.env
 
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
 
 # SQLite Database
+prisma/*.db
 prisma/*.db-journal
