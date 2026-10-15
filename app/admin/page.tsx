@@ -3,14 +3,12 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { StatusBadge } from "@/components/StatusBadge";
-import { PriorityBadge } from "@/components/PriorityBadge";
 import { SlaBadge } from "@/components/SlaBadge";
 import { CATEGORY_METADATA, IssueCategory } from "@/lib/types";
 import {
   Building2,
   AlertTriangle,
   BarChart3,
-  Award,
 } from "lucide-react";
 
 export default function AdminHubPage() {
@@ -59,14 +57,14 @@ export default function AdminHubPage() {
       {/* Top Banner */}
       <div>
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900 text-white text-xs font-semibold mb-2">
-          <Building2 className="w-3.5 h-3.5 text-orange-400" />
-          Zonal Municipal Commissioner & Sakala SLA Hub
+          <Building2 className="w-3.5 h-3.5 text-emerald-400" />
+          Tambaram City Municipal Commissioner & Zonal SLA Hub
         </div>
         <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-          Bengaluru Urban Local Body SLA Hub
+          Tambaram Corporation & Vandalur SLA Hub
         </h1>
         <p className="text-xs text-slate-500 mt-1">
-          Monitor service-level agreement adherence across BBMP, BWSSB, and BESCOM divisions. Investigate contractor bottlenecks and overdue ward complaints.
+          Monitor service-level agreement compliance across TCMC, CMWSSB, and TANGEDCO divisions. Review overdue ward complaints across GST Road, Mudichur, and Vandalur.
         </p>
       </div>
 
@@ -76,7 +74,7 @@ export default function AdminHubPage() {
           <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
             <span className="text-xs font-semibold text-slate-400 uppercase">Total Ward Complaints</span>
             <div className="text-3xl font-black text-slate-900 mt-1">{stats.total}</div>
-            <span className="text-[11px] text-slate-500 mt-1 block">Logged in BBMP Sahaya register</span>
+            <span className="text-[11px] text-slate-500 mt-1 block">Registered in TCMC master log</span>
           </div>
 
           <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
@@ -90,7 +88,7 @@ export default function AdminHubPage() {
           <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
             <span className="text-xs font-semibold text-slate-400 uppercase">Field Crews Active</span>
             <div className="text-3xl font-black text-indigo-600 mt-1">{stats.inProgress}</div>
-            <span className="text-[11px] text-slate-500 mt-1 block">Repair gangs mobilized</span>
+            <span className="text-[11px] text-slate-500 mt-1 block">TCMC / TANGEDCO squads</span>
           </div>
 
           <div className="bg-white p-5 rounded-2xl border border-red-200 shadow-sm bg-red-50/20">
@@ -98,7 +96,7 @@ export default function AdminHubPage() {
               <AlertTriangle className="w-3.5 h-3.5" /> SLA Breaches
             </span>
             <div className="text-3xl font-black text-red-600 mt-1">{stats.escalated}</div>
-            <span className="text-[11px] text-red-600 font-bold mt-1 block">Escalated to Zonal Commissioner</span>
+            <span className="text-[11px] text-red-600 font-bold mt-1 block">Escalated to Commissioner</span>
           </div>
         </div>
       )}
@@ -145,7 +143,7 @@ export default function AdminHubPage() {
                   </span>
                   <Link
                     href={`/issues/${issue.id}`}
-                    className="font-bold text-orange-600 hover:text-orange-800 flex items-center gap-1"
+                    className="font-bold text-emerald-800 hover:text-emerald-950 flex items-center gap-1"
                   >
                     Investigate Ticket &rarr;
                   </Link>
@@ -160,7 +158,7 @@ export default function AdminHubPage() {
       {stats?.categoryStats && (
         <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
           <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-            <BarChart3 className="w-4 h-4 text-orange-600" />
+            <BarChart3 className="w-4 h-4 text-emerald-700" />
             Authority Performance & Turnaround Benchmarks
           </h3>
 
@@ -180,7 +178,7 @@ export default function AdminHubPage() {
                   </div>
                   <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
                     <div
-                      className="bg-orange-600 h-full rounded-full transition-all duration-500"
+                      className="bg-emerald-700 h-full rounded-full transition-all duration-500"
                       style={{ width: `${item.resolutionRate}%` }}
                     />
                   </div>
@@ -246,7 +244,7 @@ export default function AdminHubPage() {
                   <td className="px-4 py-3 text-right">
                     <Link
                       href={`/issues/${issue.id}`}
-                      className="text-orange-600 hover:text-orange-800 font-semibold"
+                      className="text-emerald-700 hover:text-emerald-900 font-semibold"
                     >
                       Audit &rarr;
                     </Link>

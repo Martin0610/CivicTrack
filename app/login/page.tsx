@@ -77,14 +77,14 @@ export default function LoginPage() {
       <div className="max-w-md w-full space-y-6">
         {/* Header */}
         <div className="text-center space-y-2">
-          <div className="w-12 h-12 rounded-2xl bg-orange-600 text-white flex items-center justify-center mx-auto shadow-lg shadow-orange-600/30 text-xl font-bold">
-            🇮🇳
+          <div className="w-12 h-12 rounded-2xl bg-emerald-700 text-white flex items-center justify-center mx-auto shadow-lg shadow-emerald-700/30 text-xl font-bold">
+            🏛️
           </div>
           <h1 className="text-2xl font-black text-slate-900 tracking-tight">
-            Sign In to CivicTrack India
+            Sign In to CivicTrack Tambaram
           </h1>
           <p className="text-xs text-slate-500">
-            Access citizen ward complaints, BBMP work orders, or Zonal Commissioner hub.
+            Access Tambaram Corporation ward grievances, work orders, or Commissioner hub.
           </p>
         </div>
 
@@ -104,28 +104,28 @@ export default function LoginPage() {
             <button
               type="button"
               onClick={() => loginDemoAccount("citizen@civictrack.in", "citizen123", "/citizen")}
-              className="p-2.5 rounded-xl bg-white border border-slate-200 hover:border-orange-400 text-left transition-colors text-xs flex flex-col justify-between"
+              className="p-2.5 rounded-xl bg-white border border-slate-200 hover:border-emerald-500 text-left transition-colors text-xs flex flex-col justify-between"
             >
-              <span className="font-bold text-slate-900">Aarav Mehta</span>
-              <span className="text-[10px] text-slate-400">Citizen (Ward 112)</span>
+              <span className="font-bold text-slate-900">Karthik Ramaswamy</span>
+              <span className="text-[10px] text-slate-400">Citizen (Ward 42 Tambaram)</span>
             </button>
 
             <button
               type="button"
               onClick={() => loginDemoAccount("roads@civictrack.in", "official123", "/department")}
-              className="p-2.5 rounded-xl bg-white border border-slate-200 hover:border-orange-400 text-left transition-colors text-xs flex flex-col justify-between"
+              className="p-2.5 rounded-xl bg-white border border-slate-200 hover:border-emerald-500 text-left transition-colors text-xs flex flex-col justify-between"
             >
-              <span className="font-bold text-slate-900">Rajesh Gowda</span>
-              <span className="text-[10px] text-slate-400">AEE (BBMP Roads)</span>
+              <span className="font-bold text-slate-900">Thiru K. Saravanan</span>
+              <span className="text-[10px] text-slate-400">AEE (TCMC Highways)</span>
             </button>
 
             <button
               type="button"
               onClick={() => loginDemoAccount("sanitation@civictrack.in", "official123", "/department")}
-              className="p-2.5 rounded-xl bg-white border border-slate-200 hover:border-orange-400 text-left transition-colors text-xs flex flex-col justify-between"
+              className="p-2.5 rounded-xl bg-white border border-slate-200 hover:border-emerald-500 text-left transition-colors text-xs flex flex-col justify-between"
             >
-              <span className="font-bold text-slate-900">Pooja Nambiar</span>
-              <span className="text-[10px] text-slate-400">SWM Health Officer</span>
+              <span className="font-bold text-slate-900">Dr. Deepa Sundaram</span>
+              <span className="text-[10px] text-slate-400">TCMC City Health Officer</span>
             </button>
 
             <button
@@ -133,8 +133,8 @@ export default function LoginPage() {
               onClick={() => loginDemoAccount("admin@civictrack.in", "admin123", "/admin")}
               className="p-2.5 rounded-xl bg-slate-900 text-white hover:bg-slate-800 text-left transition-colors text-xs flex flex-col justify-between"
             >
-              <span className="font-bold">Dr. Vikramaditya Rao</span>
-              <span className="text-[10px] text-slate-300">Zonal Commissioner (IAS)</span>
+              <span className="font-bold">Dr. Alby John, IAS</span>
+              <span className="text-[10px] text-slate-300">TCMC Commissioner</span>
             </button>
           </div>
         </div>
@@ -151,7 +151,7 @@ export default function LoginPage() {
               placeholder="name@civictrack.in"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
+              className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
             />
           </div>
 
@@ -165,14 +165,14 @@ export default function LoginPage() {
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
+              className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-semibold text-xs shadow-md shadow-orange-600/20 disabled:opacity-50 transition-colors flex items-center justify-center gap-1.5"
+            className="w-full py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-xs shadow-md shadow-emerald-700/20 disabled:opacity-50 transition-colors flex items-center justify-center gap-1.5"
           >
             <LogIn className="w-4 h-4" />
             {loading ? "Signing in..." : "Sign In"}
@@ -181,7 +181,7 @@ export default function LoginPage() {
 
         <p className="text-center text-xs text-slate-500">
           Don't have an account?{" "}
-          <Link href="/register" className="font-bold text-orange-600 hover:underline">
+          <Link href="/register" className="font-bold text-emerald-700 hover:underline">
             Register as a citizen
           </Link>
         </p>

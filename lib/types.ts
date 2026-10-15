@@ -22,7 +22,7 @@ export interface CategoryMeta {
   key: IssueCategory;
   label: string;
   departmentName: string;
-  authorityCode: string; // e.g. BBMP, BWSSB, BESCOM
+  authorityCode: string; // e.g. TCMC, CMWSSB, TANGEDCO
   defaultSlaHours: number;
   icon: string;
   color: string;
@@ -32,53 +32,53 @@ export interface CategoryMeta {
 export const CATEGORY_METADATA: Record<IssueCategory, CategoryMeta> = {
   ROADS: {
     key: "ROADS",
-    label: "Roads & Pothole Hazards",
-    departmentName: "BBMP Road Infrastructure & Traffic Engineering",
-    authorityCode: "BBMP-ROADS",
+    label: "Roads, Potholes & GST Road Hazards",
+    departmentName: "Tambaram City Municipal Corporation (TCMC) & State Highways Dept",
+    authorityCode: "TCMC-ROADS",
     defaultSlaHours: 72, // 3 days
     icon: "Truck",
     color: "amber",
-    description: "Potholes, broken footpaths, damaged median dividers, non-functional traffic signals",
+    description: "Potholes on Mudichur Road, GST Road cracks, broken medians, damaged pedestrian footpaths",
   },
   SANITATION: {
     key: "SANITATION",
-    label: "Solid Waste & Sanitation",
-    departmentName: "BBMP Solid Waste Management (SWM / Swachhata)",
-    authorityCode: "SWM-SWACHH",
+    label: "Solid Waste Management & Swachhata",
+    departmentName: "TCMC Public Health & Solid Waste Management Division",
+    authorityCode: "TCMC-SWM",
     defaultSlaHours: 48, // 2 days
     icon: "Trash2",
     color: "emerald",
-    description: "Black spots, overflowing community bins, unsegregated garbage, debris dumping",
+    description: "Open black spots, overflowing dumper bins near Vandalur junction, roadside meat/vegetable waste",
   },
   WATER_DRAINAGE: {
     key: "WATER_DRAINAGE",
-    label: "Water Supply & Storm Drains (SWD)",
-    departmentName: "BWSSB & BBMP Storm Water Drain Division",
-    authorityCode: "BWSSB-DRAIN",
+    label: "Drinking Water & Stormwater Drains (SWD)",
+    departmentName: "Chennai Metro Water (CMWSSB) & Tambaram UGD Division",
+    authorityCode: "CMWSSB-WATER",
     defaultSlaHours: 24, // 1 day (Critical)
     icon: "Droplets",
     color: "blue",
-    description: "Cauvery pipe bursts, open stormwater drains (Rajakaluve), sewage overflow, low pressure",
+    description: "Palar/Chembarambakkam drinking water pipe burst, open storm drain culverts, Mudichur waterlogging",
   },
   ELECTRICITY: {
     key: "ELECTRICITY",
-    label: "Power & Street Lighting",
-    departmentName: "BESCOM (Electricity Supply & Public Lighting)",
-    authorityCode: "BESCOM-LT",
+    label: "Power Distribution & Public Lighting",
+    departmentName: "TANGEDCO (Tambaram & Vandalur Sub-Division)",
+    authorityCode: "TANGEDCO-LT",
     defaultSlaHours: 48, // 2 days
     icon: "Zap",
     color: "yellow",
-    description: "Broken LED streetlights, dangling overhead cables, hazardous feeder boxes, transformer sparks",
+    description: "Failed LED streetlights on Gandhi Road, sagging overhead cables, junction box sparks",
   },
   OTHER: {
     key: "OTHER",
-    label: "General Ward Grievance",
-    departmentName: "Zonal Municipal Commissioner Office",
-    authorityCode: "WARD-ADMIN",
+    label: "General Ward Infrastructure",
+    departmentName: "Zonal Municipal Commissioner Office (Tambaram / Vandalur)",
+    authorityCode: "TCMC-ADMIN",
     defaultSlaHours: 96, // 4 days
     icon: "AlertCircle",
     color: "purple",
-    description: "Illegal hoardings, tree branch falls, footpath encroachments, public park maintenance",
+    description: "Footpath encroachments, fallen tree branches, cattle nuisance, public park maintenance",
   },
 };
 

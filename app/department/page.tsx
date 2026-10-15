@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { StatusBadge } from "@/components/StatusBadge";
-import { PriorityBadge } from "@/components/PriorityBadge";
 import { SlaBadge } from "@/components/SlaBadge";
 import { CATEGORY_METADATA, IssueCategory, IssueStatus } from "@/lib/types";
 import {
@@ -61,7 +60,7 @@ export default function DepartmentQueuePage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           status: newStatus,
-          note: actionNote || (newStatus === "RESOLVED" ? "Repairs inspected and verified on site." : "BBMP/BESCOM field gang dispatched."),
+          note: actionNote || (newStatus === "RESOLVED" ? "Inspected and verified on site by TCMC engineer." : "TCMC/TANGEDCO field gang mobilized."),
           action: newStatus === "RESOLVED" ? "Marked as Resolved" : "Work Commenced",
           resolvedImageUrl: newStatus === "RESOLVED" ? resolvedImageUrl : undefined,
         }),
@@ -88,15 +87,15 @@ export default function DepartmentQueuePage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-50 text-orange-800 text-xs font-semibold mb-2">
-            <Wrench className="w-3.5 h-3.5 text-orange-600" />
-            BBMP & Parastatal Field Operations Dispatch
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-semibold mb-2">
+            <Wrench className="w-3.5 h-3.5 text-emerald-700" />
+            Tambaram City Municipal Corporation (TCMC) Field Operations
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
             Department Work Orders
           </h1>
           <p className="text-xs text-slate-500 mt-1">
-            Claim assigned ward tickets, deploy repair teams, and submit completion proofs.
+            Claim assigned ward complaints across Tambaram, Vandalur, and Mudichur sectors.
           </p>
         </div>
       </div>
@@ -122,17 +121,17 @@ export default function DepartmentQueuePage() {
       </div>
 
       {/* Active Department Info Banner */}
-      <div className="bg-orange-50/70 border border-orange-200/80 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-700">
+      <div className="bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-700">
         <div>
           <div className="flex items-center gap-2">
-            <Building className="w-4 h-4 text-orange-600" />
-            <span className="font-bold text-orange-950">{catMeta.departmentName}</span>
+            <Building className="w-4 h-4 text-emerald-700" />
+            <span className="font-bold text-emerald-950">{catMeta.departmentName}</span>
           </div>
           <p className="text-slate-600 text-[11px] mt-0.5">{catMeta.description}</p>
         </div>
         <div className="flex items-center gap-3">
           <span className="font-semibold text-slate-900">{issues.length} active tickets</span>
-          <span className="bg-white border border-orange-200 px-2.5 py-1 rounded-lg text-orange-800 font-bold">
+          <span className="bg-white border border-emerald-200 px-2.5 py-1 rounded-lg text-emerald-800 font-bold">
             Target SLA: {catMeta.defaultSlaHours} Hours
           </span>
         </div>
@@ -144,7 +143,7 @@ export default function DepartmentQueuePage() {
           <div className="p-12 text-center text-xs text-slate-400">Loading work orders...</div>
         ) : issues.length === 0 ? (
           <div className="p-12 text-center text-xs text-slate-400">
-            No pending tickets in this department queue. Excellent work!
+            No pending tickets in this department queue.
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -230,7 +229,7 @@ export default function DepartmentQueuePage() {
                   Update Work Order: {activeIssue.ticketNumber}
                 </h3>
                 <p className="text-xs text-slate-500">
-                  Target status: <span className="font-bold text-orange-600">{newStatus}</span>
+                  Target status: <span className="font-bold text-emerald-800">{newStatus}</span>
                 </p>
               </div>
               <button
@@ -251,12 +250,12 @@ export default function DepartmentQueuePage() {
                   rows={3}
                   placeholder={
                     newStatus === "RESOLVED"
-                      ? "Detail the repairs completed (e.g., hot-mix asphalt patching completed, tested by BBMP ward engineer)..."
-                      : "Provide team dispatch details, vehicle number, and expected completion..."
+                      ? "Detail the repairs completed (e.g., hot-mix asphalt patching completed on Mudichur Road, tested by TCMC engineer)..."
+                      : "Provide gang dispatch details, vehicle number, and expected completion..."
                   }
                   value={actionNote}
                   onChange={(e) => setActionNote(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 text-xs"
+                  className="w-full px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-xs"
                 />
               </div>
 
@@ -272,7 +271,7 @@ export default function DepartmentQueuePage() {
                       placeholder="https://... photo link of completed work"
                       value={resolvedImageUrl}
                       onChange={(e) => setResolvedImageUrl(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 text-xs"
+                      className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-xs"
                     />
                   </div>
                 </div>
@@ -289,7 +288,7 @@ export default function DepartmentQueuePage() {
                 <button
                   type="submit"
                   disabled={isUpdating}
-                  className="px-5 py-2 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-semibold shadow-sm disabled:opacity-50"
+                  className="px-5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-semibold shadow-sm disabled:opacity-50"
                 >
                   {isUpdating ? "Saving..." : "Confirm Status Update"}
                 </button>
