@@ -1,0 +1,98 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String     @id @default(cuid())
+  name         String
+  email        String     @unique
+  passwordHash String
+  role         String     @default("CITIZEN") // "CITIZEN", "OFFICIAL", "ADMIN"
+  department   String?    // "ROADS", "SANITATION", "WATER_DRAINAGE", "ELECTRICITY"
+  phone        String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  
+  reportedIssues Issue[]  @relation("ReportedBy")
+  assignedIssues Issue[]  @relation("AssignedTo")
+  upvotes        Upvote[]
+  comments       Comment[]
+  auditLogs      AuditLog[]
+}
+
+model Issue {
+  id               String          @id @default(cuid())
+  ticketNumber     String          @unique // e.g. CIVIC-2026-1001
+  title            String
+  description      String
+  category         String          // "ROADS", "SANITATION", "WATER_DRAINAGE", "ELECTRICITY", "OTHER"
+  status           String          @default("SUBMITTED") // "SUBMITTED", "UNDER_REVIEW", "ASSIGNED", "IN_PROGRESS", "RESOLVED", "REJECTED", "CLOSED"
+  priority         String          @default("MEDIUM")    // "LOW", "MEDIUM", "HIGH", "EMERGENCY"
+  latitude         Float
+  longitude        Float
+  address          String
+  landmark         String?
+  imageUrl         String?         // Problem photo
+  resolvedImageUrl String?         // Resolution proof photo
+  reportedById     String
+  reportedBy       User            @relation("ReportedBy", fields: [reportedById], references: [id])
+  assignedToId     String?
+  assignedTo       User?           @relation("AssignedTo", fields: [assignedToId], references: [id])
+  slaDeadline      DateTime
+  isEscalated      Boolean         @default(false)
+  upvoteCount      Int             @default(0)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  
+  timeline         IssueTimeline[]
+  upvotes          Upvote[]
+  comments         Comment[]
+}
+
+model IssueTimeline {
+  id         String   @id @default(cuid())
+  issueId    String
+  issue      Issue    @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  fromStatus String?
+  toStatus   String
+  action     String   // e.g. "Complaint registered", "Assigned to Roads Dept", "Work commenced", "Resolved"
+  note       String?
+  actorName  String
+  createdAt  DateTime @default(now())
+}
+
+model Upvote {
+  id        String   @id @default(cuid())
+  issueId   String
+  issue     Issue    @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([issueId, userId])
+}
+
+model Comment {
+  id         String   @id @default(cuid())
+  issueId    String
+  issue      Issue    @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content    String
+  isInternal Boolean  @default(false) // Official internal note vs public comment
+  createdAt  DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  action    String
+  details   String?
+  createdAt DateTime @default(now())
+}
