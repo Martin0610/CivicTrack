@@ -11,7 +11,6 @@ import {
   UserCheck,
   Building2,
   LogOut,
-  LogIn,
   PlusCircle,
   ChevronDown,
 } from "lucide-react";
@@ -62,7 +61,6 @@ export function Navbar() {
         setUser(data.user);
         setDropdownOpen(false);
 
-        // Redirect to relevant workspace
         if (data.user.role === "ADMIN") router.push("/admin");
         else if (data.user.role === "OFFICIAL") router.push("/department");
         else router.push("/citizen");
@@ -80,18 +78,18 @@ export function Navbar() {
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <div className="flex items-center gap-8">
+          {/* Logo & Indian Municipal Badge */}
+          <div className="flex items-center gap-6">
             <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="w-10 h-10 rounded-xl bg-civic-600 text-white flex items-center justify-center shadow-md shadow-civic-500/20 group-hover:bg-civic-700 transition-colors">
-                <ShieldAlert className="w-5 h-5" />
+              <div className="w-10 h-10 rounded-xl bg-orange-600 text-white flex items-center justify-center shadow-md shadow-orange-500/20 group-hover:bg-orange-700 transition-colors font-bold text-sm">
+                🇮🇳
               </div>
               <div>
-                <span className="text-lg font-black tracking-tight text-slate-900 group-hover:text-civic-600 transition-colors">
-                  Civic<span className="text-civic-600">Track</span>
+                <span className="text-lg font-black tracking-tight text-slate-900 group-hover:text-orange-600 transition-colors">
+                  Civic<span className="text-orange-600">Track</span>
                 </span>
-                <span className="block text-[10px] uppercase font-bold tracking-wider text-slate-600">
-                  Municipal Grievance Hub
+                <span className="block text-[10px] uppercase font-bold tracking-wider text-slate-500">
+                  Bengaluru Municipal Portal
                 </span>
               </div>
             </Link>
@@ -102,48 +100,48 @@ export function Navbar() {
                 href="/"
                 className={`px-3 py-2 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5 ${
                   pathname === "/"
-                    ? "bg-civic-50 text-civic-700"
+                    ? "bg-orange-50 text-orange-700"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                 }`}
               >
-                <MapPin className="w-4 h-4" />
-                Public City Map
+                <MapPin className="w-4 h-4 text-orange-600" />
+                Live Ward Map
               </Link>
 
               <Link
                 href="/citizen"
                 className={`px-3 py-2 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5 ${
                   pathname.startsWith("/citizen")
-                    ? "bg-civic-50 text-civic-700"
+                    ? "bg-orange-50 text-orange-700"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                 }`}
               >
                 <FileText className="w-4 h-4" />
-                Citizen Portal
+                Citizen Desk
               </Link>
 
               <Link
                 href="/department"
                 className={`px-3 py-2 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5 ${
                   pathname.startsWith("/department")
-                    ? "bg-civic-50 text-civic-700"
+                    ? "bg-orange-50 text-orange-700"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                 }`}
               >
                 <UserCheck className="w-4 h-4" />
-                Department Queue
+                BBMP / BESCOM Queue
               </Link>
 
               <Link
                 href="/admin"
                 className={`px-3 py-2 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5 ${
                   pathname.startsWith("/admin")
-                    ? "bg-civic-50 text-civic-700"
+                    ? "bg-orange-50 text-orange-700"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                 }`}
               >
                 <Building2 className="w-4 h-4" />
-                Admin SLA Hub
+                Zonal SLA Hub
               </Link>
             </nav>
           </div>
@@ -156,49 +154,49 @@ export function Navbar() {
                 type="button"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs font-semibold text-slate-700 bg-slate-50 hover:bg-slate-100 transition-colors"
-                title="Quickly switch demo personas"
+                title="Switch demo personas"
               >
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                Role Switcher
+                <span>Demo Switcher</span>
                 <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
               </button>
 
               {dropdownOpen && (
-                <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-slate-200 py-2 z-50 text-xs">
+                <div className="absolute right-0 mt-2 w-72 bg-white rounded-xl shadow-2xl border border-slate-200 py-2 z-50 text-xs">
                   <div className="px-3 py-1.5 font-bold uppercase tracking-wider text-[10px] text-slate-400 border-b border-slate-100">
-                    Switch Active Persona
+                    Switch Persona (1-Click)
                   </div>
                   <button
-                    onClick={() => switchRole("citizen@civictrack.org")}
+                    onClick={() => switchRole("citizen@civictrack.in")}
                     disabled={isSwitching}
                     className="w-full text-left px-3 py-2 hover:bg-slate-50 flex flex-col transition-colors"
                   >
-                    <span className="font-semibold text-slate-800">Alex Rivera (Citizen)</span>
-                    <span className="text-[10px] text-slate-400">Reports complaints & upvotes</span>
+                    <span className="font-semibold text-slate-800">Aarav Mehta (Citizen)</span>
+                    <span className="text-[10px] text-slate-400">Reports potholes & upvotes Ward 112</span>
                   </button>
                   <button
-                    onClick={() => switchRole("roads@civictrack.org")}
+                    onClick={() => switchRole("roads@civictrack.in")}
                     disabled={isSwitching}
                     className="w-full text-left px-3 py-2 hover:bg-slate-50 flex flex-col transition-colors"
                   >
-                    <span className="font-semibold text-slate-800">Marcus Vance (Roads Staff)</span>
-                    <span className="text-[10px] text-slate-400">Roads & asphalt work queue</span>
+                    <span className="font-semibold text-slate-800">Rajesh Gowda (AEE BBMP Roads)</span>
+                    <span className="text-[10px] text-slate-400">Indiranagar asphalt repair queue</span>
                   </button>
                   <button
-                    onClick={() => switchRole("sanitation@civictrack.org")}
+                    onClick={() => switchRole("sanitation@civictrack.in")}
                     disabled={isSwitching}
                     className="w-full text-left px-3 py-2 hover:bg-slate-50 flex flex-col transition-colors"
                   >
-                    <span className="font-semibold text-slate-800">Elena Rostova (Sanitation)</span>
-                    <span className="text-[10px] text-slate-400">Waste collection tickets</span>
+                    <span className="font-semibold text-slate-800">Pooja Nambiar (SWM Health Insp.)</span>
+                    <span className="text-[10px] text-slate-400">Koramangala black spot clearance</span>
                   </button>
                   <button
-                    onClick={() => switchRole("admin@civictrack.org")}
+                    onClick={() => switchRole("admin@civictrack.in")}
                     disabled={isSwitching}
                     className="w-full text-left px-3 py-2 hover:bg-slate-50 flex flex-col transition-colors border-t border-slate-100"
                   >
-                    <span className="font-semibold text-civic-700">Mayor Office (City Admin)</span>
-                    <span className="text-[10px] text-slate-400">SLA escalations & analytics</span>
+                    <span className="font-semibold text-orange-700">Dr. Vikramaditya Rao, IAS</span>
+                    <span className="text-[10px] text-slate-400">Zonal Commissioner (SLA Escalations)</span>
                   </button>
                 </div>
               )}
@@ -209,7 +207,7 @@ export function Navbar() {
               <div className="flex items-center gap-2">
                 <div className="hidden sm:flex flex-col text-right">
                   <span className="text-xs font-bold text-slate-800">{user.name}</span>
-                  <span className="text-[10px] font-medium text-civic-700 bg-civic-50 px-1.5 py-0.2 rounded border border-civic-200 inline-block self-end">
+                  <span className="text-[10px] font-medium text-orange-700 bg-orange-50 px-1.5 py-0.2 rounded border border-orange-200 inline-block self-end">
                     {user.role} {user.department ? `(${user.department})` : ""}
                   </span>
                 </div>
@@ -231,10 +229,10 @@ export function Navbar() {
                 </Link>
                 <Link
                   href="/citizen/report"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-civic-600 text-white hover:bg-civic-700 transition-colors shadow-sm"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-orange-600 text-white hover:bg-orange-700 transition-colors shadow-sm"
                 >
                   <PlusCircle className="w-4 h-4" />
-                  Report Issue
+                  Report Problem
                 </Link>
               </div>
             )}

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { ShieldAlert, LogIn, AlertCircle, ArrowRight, Check } from "lucide-react";
+import { LogIn, AlertCircle } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -77,14 +77,14 @@ export default function LoginPage() {
       <div className="max-w-md w-full space-y-6">
         {/* Header */}
         <div className="text-center space-y-2">
-          <div className="w-12 h-12 rounded-2xl bg-civic-600 text-white flex items-center justify-center mx-auto shadow-lg shadow-civic-600/30">
-            <ShieldAlert className="w-6 h-6" />
+          <div className="w-12 h-12 rounded-2xl bg-orange-600 text-white flex items-center justify-center mx-auto shadow-lg shadow-orange-600/30 text-xl font-bold">
+            🇮🇳
           </div>
           <h1 className="text-2xl font-black text-slate-900 tracking-tight">
-            Sign In to CivicTrack
+            Sign In to CivicTrack India
           </h1>
           <p className="text-xs text-slate-500">
-            Access your citizen reports, municipal dispatch queues, or admin dashboard.
+            Access citizen ward complaints, BBMP work orders, or Zonal Commissioner hub.
           </p>
         </div>
 
@@ -95,46 +95,46 @@ export default function LoginPage() {
           </div>
         )}
 
-        {/* Demo Fast-Login Box */}
+        {/* 1-Click Fast Login Box */}
         <div className="bg-slate-50 rounded-2xl border border-slate-200 p-4 space-y-2.5">
           <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
-            One-Click Demo Personas:
+            1-Click Demo Personas:
           </div>
           <div className="grid grid-cols-2 gap-2">
             <button
               type="button"
-              onClick={() => loginDemoAccount("citizen@civictrack.org", "citizen123", "/citizen")}
-              className="p-2.5 rounded-xl bg-white border border-slate-200 hover:border-civic-400 text-left transition-colors text-xs flex flex-col justify-between"
+              onClick={() => loginDemoAccount("citizen@civictrack.in", "citizen123", "/citizen")}
+              className="p-2.5 rounded-xl bg-white border border-slate-200 hover:border-orange-400 text-left transition-colors text-xs flex flex-col justify-between"
             >
-              <span className="font-bold text-slate-900">Alex Rivera</span>
-              <span className="text-[10px] text-slate-400">Citizen Persona</span>
+              <span className="font-bold text-slate-900">Aarav Mehta</span>
+              <span className="text-[10px] text-slate-400">Citizen (Ward 112)</span>
             </button>
 
             <button
               type="button"
-              onClick={() => loginDemoAccount("roads@civictrack.org", "official123", "/department")}
-              className="p-2.5 rounded-xl bg-white border border-slate-200 hover:border-civic-400 text-left transition-colors text-xs flex flex-col justify-between"
+              onClick={() => loginDemoAccount("roads@civictrack.in", "official123", "/department")}
+              className="p-2.5 rounded-xl bg-white border border-slate-200 hover:border-orange-400 text-left transition-colors text-xs flex flex-col justify-between"
             >
-              <span className="font-bold text-slate-900">Marcus Vance</span>
-              <span className="text-[10px] text-slate-400">Roads Official</span>
+              <span className="font-bold text-slate-900">Rajesh Gowda</span>
+              <span className="text-[10px] text-slate-400">AEE (BBMP Roads)</span>
             </button>
 
             <button
               type="button"
-              onClick={() => loginDemoAccount("sanitation@civictrack.org", "official123", "/department")}
-              className="p-2.5 rounded-xl bg-white border border-slate-200 hover:border-civic-400 text-left transition-colors text-xs flex flex-col justify-between"
+              onClick={() => loginDemoAccount("sanitation@civictrack.in", "official123", "/department")}
+              className="p-2.5 rounded-xl bg-white border border-slate-200 hover:border-orange-400 text-left transition-colors text-xs flex flex-col justify-between"
             >
-              <span className="font-bold text-slate-900">Elena Rostova</span>
-              <span className="text-[10px] text-slate-400">Sanitation Official</span>
+              <span className="font-bold text-slate-900">Pooja Nambiar</span>
+              <span className="text-[10px] text-slate-400">SWM Health Officer</span>
             </button>
 
             <button
               type="button"
-              onClick={() => loginDemoAccount("admin@civictrack.org", "admin123", "/admin")}
+              onClick={() => loginDemoAccount("admin@civictrack.in", "admin123", "/admin")}
               className="p-2.5 rounded-xl bg-slate-900 text-white hover:bg-slate-800 text-left transition-colors text-xs flex flex-col justify-between"
             >
-              <span className="font-bold">City Admin</span>
-              <span className="text-[10px] text-slate-300">Commissioner Hub</span>
+              <span className="font-bold">Dr. Vikramaditya Rao</span>
+              <span className="text-[10px] text-slate-300">Zonal Commissioner (IAS)</span>
             </button>
           </div>
         </div>
@@ -148,10 +148,10 @@ export default function LoginPage() {
             <input
               type="email"
               required
-              placeholder="name@civictrack.org"
+              placeholder="name@civictrack.in"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-civic-500/20 focus:border-civic-500"
+              className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
             />
           </div>
 
@@ -165,14 +165,14 @@ export default function LoginPage() {
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-civic-500/20 focus:border-civic-500"
+              className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2.5 rounded-xl bg-civic-600 hover:bg-civic-700 text-white font-semibold text-xs shadow-md shadow-civic-600/20 disabled:opacity-50 transition-colors flex items-center justify-center gap-1.5"
+            className="w-full py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-semibold text-xs shadow-md shadow-orange-600/20 disabled:opacity-50 transition-colors flex items-center justify-center gap-1.5"
           >
             <LogIn className="w-4 h-4" />
             {loading ? "Signing in..." : "Sign In"}
@@ -181,7 +181,7 @@ export default function LoginPage() {
 
         <p className="text-center text-xs text-slate-500">
           Don't have an account?{" "}
-          <Link href="/register" className="font-bold text-civic-600 hover:underline">
+          <Link href="/register" className="font-bold text-orange-600 hover:underline">
             Register as a citizen
           </Link>
         </p>

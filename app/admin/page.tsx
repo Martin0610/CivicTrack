@@ -9,13 +9,8 @@ import { CATEGORY_METADATA, IssueCategory } from "@/lib/types";
 import {
   Building2,
   AlertTriangle,
-  CheckCircle,
-  TrendingUp,
-  Clock,
-  ShieldAlert,
-  ExternalLink,
-  Users,
   BarChart3,
+  Award,
 } from "lucide-react";
 
 export default function AdminHubPage() {
@@ -43,7 +38,6 @@ export default function AdminHubPage() {
       setStats(statsData);
       setAllIssues(issuesData.issues || []);
 
-      // Filter escalated/overdue
       const now = new Date().getTime();
       const breached = (issuesData.issues || []).filter(
         (i: any) =>
@@ -65,14 +59,14 @@ export default function AdminHubPage() {
       {/* Top Banner */}
       <div>
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900 text-white text-xs font-semibold mb-2">
-          <Building2 className="w-3.5 h-3.5 text-amber-400" />
-          Municipal Administrator & Commissioner Portal
+          <Building2 className="w-3.5 h-3.5 text-orange-400" />
+          Zonal Municipal Commissioner & Sakala SLA Hub
         </div>
         <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-          City-wide SLA Escalation & Oversight Hub
+          Bengaluru Urban Local Body SLA Hub
         </h1>
         <p className="text-xs text-slate-500 mt-1">
-          Monitor service-level agreement adherence, resolve department bottlenecks, and audit civic infrastructure health.
+          Monitor service-level agreement adherence across BBMP, BWSSB, and BESCOM divisions. Investigate contractor bottlenecks and overdue ward complaints.
         </p>
       </div>
 
@@ -80,23 +74,23 @@ export default function AdminHubPage() {
       {stats && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-            <span className="text-xs font-semibold text-slate-400 uppercase">Total City Grievances</span>
+            <span className="text-xs font-semibold text-slate-400 uppercase">Total Ward Complaints</span>
             <div className="text-3xl font-black text-slate-900 mt-1">{stats.total}</div>
-            <span className="text-[11px] text-slate-500 mt-1 block">Registered in municipal log</span>
+            <span className="text-[11px] text-slate-500 mt-1 block">Logged in BBMP Sahaya register</span>
           </div>
 
           <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-            <span className="text-xs font-semibold text-slate-400 uppercase">Resolution Rate</span>
+            <span className="text-xs font-semibold text-slate-400 uppercase">SLA Clearance Rate</span>
             <div className="text-3xl font-black text-emerald-600 mt-1">{stats.resolutionRate}%</div>
             <span className="text-[11px] text-emerald-600 font-medium mt-1 block">
-              {stats.resolved} of {stats.total} closed
+              {stats.resolved} of {stats.total} resolved
             </span>
           </div>
 
           <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-            <span className="text-xs font-semibold text-slate-400 uppercase">Active In Progress</span>
+            <span className="text-xs font-semibold text-slate-400 uppercase">Field Crews Active</span>
             <div className="text-3xl font-black text-indigo-600 mt-1">{stats.inProgress}</div>
-            <span className="text-[11px] text-slate-500 mt-1 block">Field units on site</span>
+            <span className="text-[11px] text-slate-500 mt-1 block">Repair gangs mobilized</span>
           </div>
 
           <div className="bg-white p-5 rounded-2xl border border-red-200 shadow-sm bg-red-50/20">
@@ -104,7 +98,7 @@ export default function AdminHubPage() {
               <AlertTriangle className="w-3.5 h-3.5" /> SLA Breaches
             </span>
             <div className="text-3xl font-black text-red-600 mt-1">{stats.escalated}</div>
-            <span className="text-[11px] text-red-600 font-bold mt-1 block">Requires Mayor review</span>
+            <span className="text-[11px] text-red-600 font-bold mt-1 block">Escalated to Zonal Commissioner</span>
           </div>
         </div>
       )}
@@ -119,10 +113,10 @@ export default function AdminHubPage() {
               </div>
               <div>
                 <h3 className="text-base font-bold text-red-950">
-                  Critical SLA Escalation Alerts ({escalatedIssues.length})
+                  Critical SLA Escalations ({escalatedIssues.length} Ward Issues Breached)
                 </h3>
                 <p className="text-xs text-red-700">
-                  These tickets have exceeded the guaranteed turnaround threshold without resolution.
+                  These complaints exceeded the mandatory turnaround time without verified field resolution.
                 </p>
               </div>
             </div>
@@ -147,11 +141,11 @@ export default function AdminHubPage() {
 
                 <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs">
                   <span className="text-red-700 font-semibold bg-red-100 px-2 py-0.5 rounded text-[10px]">
-                    Department: {issue.category}
+                    Authority: {issue.category}
                   </span>
                   <Link
                     href={`/issues/${issue.id}`}
-                    className="font-bold text-civic-600 hover:text-civic-800 flex items-center gap-1"
+                    className="font-bold text-orange-600 hover:text-orange-800 flex items-center gap-1"
                   >
                     Investigate Ticket &rarr;
                   </Link>
@@ -166,8 +160,8 @@ export default function AdminHubPage() {
       {stats?.categoryStats && (
         <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
           <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-            <BarChart3 className="w-4 h-4 text-civic-600" />
-            Department Performance & Resolution Rates
+            <BarChart3 className="w-4 h-4 text-orange-600" />
+            Authority Performance & Turnaround Benchmarks
           </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -176,7 +170,7 @@ export default function AdminHubPage() {
               return (
                 <div key={item.category} className="p-4 rounded-xl border border-slate-100 bg-slate-50/50 space-y-2">
                   <div className="text-xs font-bold text-slate-800 truncate">
-                    {meta?.label || item.category}
+                    {meta?.authorityCode} ({meta?.label || item.category})
                   </div>
                   <div className="flex items-baseline justify-between">
                     <span className="text-2xl font-black text-slate-900">{item.resolutionRate}%</span>
@@ -186,7 +180,7 @@ export default function AdminHubPage() {
                   </div>
                   <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
                     <div
-                      className="bg-civic-600 h-full rounded-full transition-all duration-500"
+                      className="bg-orange-600 h-full rounded-full transition-all duration-500"
                       style={{ width: `${item.resolutionRate}%` }}
                     />
                   </div>
@@ -201,7 +195,7 @@ export default function AdminHubPage() {
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden space-y-4 p-6">
         <div className="flex items-center justify-between">
           <h3 className="text-base font-bold text-slate-900">
-            Master Municipal Grievance Register ({allIssues.length})
+            Master Ward Grievance Register ({allIssues.length})
           </h3>
           <button
             onClick={() => setFilterEscalatedOnly(!filterEscalatedOnly)}
@@ -220,8 +214,8 @@ export default function AdminHubPage() {
             <thead className="bg-slate-50 text-slate-500 uppercase tracking-wider font-semibold border-y border-slate-200">
               <tr>
                 <th className="px-4 py-3">Ticket</th>
-                <th className="px-4 py-3">Department</th>
-                <th className="px-4 py-3">Summary</th>
+                <th className="px-4 py-3">Authority</th>
+                <th className="px-4 py-3">Summary & Ward</th>
                 <th className="px-4 py-3">Status</th>
                 <th className="px-4 py-3">SLA Status</th>
                 <th className="px-4 py-3">Upvotes</th>
@@ -252,7 +246,7 @@ export default function AdminHubPage() {
                   <td className="px-4 py-3 text-right">
                     <Link
                       href={`/issues/${issue.id}`}
-                      className="text-civic-600 hover:text-civic-800 font-semibold"
+                      className="text-orange-600 hover:text-orange-800 font-semibold"
                     >
                       Audit &rarr;
                     </Link>

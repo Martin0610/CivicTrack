@@ -12,14 +12,13 @@ import {
   AlertTriangle,
   Send,
   Navigation,
-  CheckCircle,
   Clock,
-  ShieldAlert,
+  Building,
 } from "lucide-react";
 
 const InteractiveMap = dynamic(
   () => import("@/components/InteractiveMap").then((mod) => mod.InteractiveMap),
-  { ssr: false, loading: () => <div className="h-[300px] bg-slate-100 animate-pulse rounded-xl flex items-center justify-center text-slate-400 text-xs">Loading map picker...</div> }
+  { ssr: false, loading: () => <div className="h-[300px] bg-slate-100 animate-pulse rounded-xl flex items-center justify-center text-slate-400 text-xs">Loading Bengaluru map picker...</div> }
 );
 
 export default function ReportIssuePage() {
@@ -32,8 +31,8 @@ export default function ReportIssuePage() {
   const [address, setAddress] = useState("");
   const [landmark, setLandmark] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [latitude, setLatitude] = useState<number | null>(40.7128);
-  const [longitude, setLongitude] = useState<number | null>(-74.006);
+  const [latitude, setLatitude] = useState<number | null>(12.9716);
+  const [longitude, setLongitude] = useState<number | null>(77.5946);
 
   const [duplicates, setDuplicates] = useState<PotentialDuplicate[]>([]);
   const [showDuplicateModal, setShowDuplicateModal] = useState(false);
@@ -43,7 +42,6 @@ export default function ReportIssuePage() {
 
   const catMeta = CATEGORY_METADATA[category];
 
-  // Check proximity duplicates whenever location is picked
   const checkDuplicates = async (lat: number, lng: number, cat: string) => {
     try {
       setIsCheckingDuplicates(true);
@@ -86,7 +84,7 @@ export default function ReportIssuePage() {
         checkDuplicates(lat, lng, category);
       },
       (err) => {
-        alert("Unable to retrieve your location: " + err.message);
+        alert("Unable to retrieve location: " + err.message);
       }
     );
   };
@@ -105,7 +103,7 @@ export default function ReportIssuePage() {
     setErrorMsg("");
 
     if (!title || !description || !address || latitude === null || longitude === null) {
-      setErrorMsg("Please fill in all required fields and pick a map location.");
+      setErrorMsg("Please fill in all required fields and pick the map location.");
       return;
     }
 
@@ -135,7 +133,7 @@ export default function ReportIssuePage() {
           router.push("/login?redirect=/citizen/report");
           return;
         }
-        throw new Error(data.error || "Failed to submit complaint");
+        throw new Error(data.error || "Failed to submit grievance");
       }
 
       router.push(`/issues/${data.issue.id}`);
@@ -150,15 +148,15 @@ export default function ReportIssuePage() {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       {/* Header */}
       <div>
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-civic-50 text-civic-700 text-xs font-semibold mb-2">
-          <ShieldAlert className="w-3.5 h-3.5" />
-          Direct Citizen Grievance Portal
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-50 text-orange-800 text-xs font-semibold mb-2">
+          <span>🇮🇳</span>
+          BBMP & Citizen Grievance Redressal
         </div>
         <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-          Report an Urban Infrastructure Problem
+          Report a Ward Infrastructure Breakdown
         </h1>
         <p className="text-sm text-slate-600 mt-1">
-          Every report is geotagged, routed automatically to the designated field department, and backed by a municipal SLA response guarantee.
+          Directly dispatched to the designated Assistant Executive Engineer (AEE). Backed by Karnataka Sakala / Municipal SLA response guarantees.
         </p>
       </div>
 
@@ -174,7 +172,7 @@ export default function ReportIssuePage() {
         {/* Category & SLA info */}
         <div className="space-y-2">
           <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
-            Issue Category <span className="text-red-500">*</span>
+            Designated Municipal Authority <span className="text-red-500">*</span>
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
             {Object.entries(CATEGORY_METADATA).map(([key, meta]) => (
@@ -187,13 +185,18 @@ export default function ReportIssuePage() {
                 }}
                 className={`p-3 rounded-xl border text-left transition-all flex flex-col justify-between ${
                   category === key
-                    ? "border-civic-600 bg-civic-50/50 ring-2 ring-civic-500/20 shadow-sm"
+                    ? "border-orange-600 bg-orange-50/50 ring-2 ring-orange-500/20 shadow-sm"
                     : "border-slate-200 hover:border-slate-300 bg-slate-50/50"
                 }`}
               >
-                <span className="text-xs font-bold text-slate-900">{meta.label}</span>
-                <span className="text-[10px] text-slate-500 mt-1.5 flex items-center gap-1 font-medium">
-                  <Clock className="w-3 h-3 text-civic-600" />
+                <div>
+                  <span className="text-[10px] font-bold text-orange-700 uppercase tracking-wider block">
+                    {meta.authorityCode}
+                  </span>
+                  <span className="text-xs font-bold text-slate-900 mt-0.5 block">{meta.label}</span>
+                </div>
+                <span className="text-[10px] text-slate-500 mt-2 flex items-center gap-1 font-medium">
+                  <Clock className="w-3 h-3 text-orange-600" />
                   {meta.defaultSlaHours}h SLA
                 </span>
               </button>
@@ -201,12 +204,15 @@ export default function ReportIssuePage() {
           </div>
 
           <div className="mt-2 p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs text-slate-600 flex items-center justify-between">
-            <div>
-              <span className="font-semibold text-slate-900">Assigned Department: </span>
-              {catMeta.departmentName}
+            <div className="flex items-center gap-2">
+              <Building className="w-4 h-4 text-orange-600" />
+              <div>
+                <span className="font-semibold text-slate-900">Assigned Department: </span>
+                {catMeta.departmentName}
+              </div>
             </div>
-            <span className="text-[11px] font-semibold text-civic-700 bg-civic-100/70 px-2.5 py-0.5 rounded-full">
-              Guaranteed {catMeta.defaultSlaHours}h Turnaround
+            <span className="text-[11px] font-semibold text-orange-800 bg-orange-100/70 px-2.5 py-0.5 rounded-full">
+              SLA: {catMeta.defaultSlaHours} Hours
             </span>
           </div>
         </div>
@@ -214,30 +220,30 @@ export default function ReportIssuePage() {
         {/* Title */}
         <div className="space-y-1.5">
           <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
-            Complaint Summary <span className="text-red-500">*</span>
+            Issue Title / Summary <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
             required
-            placeholder="e.g. Broken streetlight causing dark pedestrian crossing"
+            placeholder="e.g. Deep asphalt crater near Indiranagar Metro Pillar 84"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-civic-500/20 focus:border-civic-500"
+            className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
           />
         </div>
 
         {/* Description */}
         <div className="space-y-1.5">
           <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
-            Detailed Description <span className="text-red-500">*</span>
+            Detailed Grievance Description <span className="text-red-500">*</span>
           </label>
           <textarea
             required
             rows={4}
-            placeholder="Describe the severity, how long it has been present, and any immediate safety hazards..."
+            placeholder="Describe the severity, how long this has persisted, and if two-wheeler or pedestrian safety is threatened..."
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-civic-500/20 focus:border-civic-500"
+            className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
           />
         </div>
 
@@ -250,27 +256,27 @@ export default function ReportIssuePage() {
             <select
               value={priority}
               onChange={(e) => setPriority(e.target.value as Priority)}
-              className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-civic-500/20 focus:border-civic-500 bg-white"
+              className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 bg-white"
             >
-              <option value="LOW">Low (Cosmetic/Minor inconvenience)</option>
+              <option value="LOW">Low (Cosmetic/Minor footpath defect)</option>
               <option value="MEDIUM">Medium (Normal priority)</option>
-              <option value="HIGH">High (Impacts traffic or sanitation)</option>
-              <option value="EMERGENCY">Emergency (Immediate hazard to life/health)</option>
+              <option value="HIGH">High (Disrupts traffic or sanitation)</option>
+              <option value="EMERGENCY">Emergency (Life hazard / Open drain / Drinking water burst)</option>
             </select>
           </div>
 
           <div className="space-y-1.5">
             <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
-              Problem Photo URL (Optional)
+              Site Photo URL (Optional)
             </label>
             <div className="relative">
               <Camera className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="url"
-                placeholder="https://... or photo link"
+                placeholder="https://... photo link of pothole or garbage"
                 value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
-                className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-civic-500/20 focus:border-civic-500"
+                className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
               />
             </div>
           </div>
@@ -280,16 +286,16 @@ export default function ReportIssuePage() {
         <div className="space-y-2 pt-2 border-t border-slate-100">
           <div className="flex items-center justify-between">
             <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-              <MapPin className="w-4 h-4 text-civic-600" />
-              Geotagged Location (Click on map to pin) <span className="text-red-500">*</span>
+              <MapPin className="w-4 h-4 text-orange-600" />
+              Geotag Location (Click map to pin) <span className="text-red-500">*</span>
             </label>
             <button
               type="button"
               onClick={handleUseCurrentLocation}
-              className="inline-flex items-center gap-1 text-xs font-semibold text-civic-600 hover:text-civic-700 bg-civic-50 hover:bg-civic-100 px-2.5 py-1 rounded-lg transition-colors"
+              className="inline-flex items-center gap-1 text-xs font-semibold text-orange-700 hover:text-orange-800 bg-orange-50 hover:bg-orange-100 px-2.5 py-1 rounded-lg transition-colors"
             >
               <Navigation className="w-3.5 h-3.5" />
-              Use Current GPS
+              Fetch Current GPS
             </button>
           </div>
 
@@ -297,37 +303,38 @@ export default function ReportIssuePage() {
             isPicker={true}
             onSelectLocation={handleSelectLocation}
             selectedPoint={latitude && longitude ? [latitude, longitude] : null}
-            center={latitude && longitude ? [latitude, longitude] : [40.7128, -74.006]}
+            center={latitude && longitude ? [latitude, longitude] : [12.9716, 77.5946]}
+            zoom={13}
             height="320px"
           />
 
           {isCheckingDuplicates && (
             <p className="text-xs text-amber-600 font-medium animate-pulse">
-              Scanning vicinity for duplicate complaints...
+              Scanning 75m radius for existing BBMP tickets...
             </p>
           )}
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
             <div className="space-y-1">
-              <label className="text-xs text-slate-600 font-medium">Street Address / Area</label>
+              <label className="text-xs text-slate-600 font-medium">Street Address & Ward</label>
               <input
                 type="text"
                 required
-                placeholder="e.g. 142 Central Avenue, Downtown"
+                placeholder="e.g. 100 Feet Road, HAL 2nd Stage, Indiranagar, Bengaluru - 560038"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-civic-500/20 focus:border-civic-500"
+                className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
               />
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs text-slate-600 font-medium">Nearby Landmark (Optional)</label>
+              <label className="text-xs text-slate-600 font-medium">Nearest Landmark</label>
               <input
                 type="text"
-                placeholder="e.g. Near Metro Station Gate 2"
+                placeholder="e.g. Near Metro Pillar 84 or Opposite Sony World Signal"
                 value={landmark}
                 onChange={(e) => setLandmark(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-civic-500/20 focus:border-civic-500"
+                className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
               />
             </div>
           </div>
@@ -346,10 +353,10 @@ export default function ReportIssuePage() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-civic-600 hover:bg-civic-700 text-white font-semibold text-xs shadow-md shadow-civic-500/20 disabled:opacity-50 transition-all"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-semibold text-xs shadow-md shadow-orange-500/20 disabled:opacity-50 transition-all"
           >
             <Send className="w-4 h-4" />
-            {isSubmitting ? "Registering Grievance..." : "Submit Grievance"}
+            {isSubmitting ? "Registering with BBMP..." : "Submit Grievance"}
           </button>
         </div>
       </form>

@@ -6,18 +6,12 @@ import { StatusBadge } from "@/components/StatusBadge";
 import { PriorityBadge } from "@/components/PriorityBadge";
 import { SlaBadge } from "@/components/SlaBadge";
 import { CATEGORY_METADATA, IssueCategory, IssueStatus } from "@/lib/types";
-import { formatDate } from "@/lib/utils";
 import {
   Wrench,
-  CheckCircle2,
-  Clock,
-  Filter,
-  MapPin,
   Camera,
   ExternalLink,
-  ShieldCheck,
   X,
-  AlertTriangle,
+  Building,
 } from "lucide-react";
 
 export default function DepartmentQueuePage() {
@@ -67,7 +61,7 @@ export default function DepartmentQueuePage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           status: newStatus,
-          note: actionNote || (newStatus === "RESOLVED" ? "Work completed and verified on site." : "Crew assigned."),
+          note: actionNote || (newStatus === "RESOLVED" ? "Repairs inspected and verified on site." : "BBMP/BESCOM field gang dispatched."),
           action: newStatus === "RESOLVED" ? "Marked as Resolved" : "Work Commenced",
           resolvedImageUrl: newStatus === "RESOLVED" ? resolvedImageUrl : undefined,
         }),
@@ -94,15 +88,15 @@ export default function DepartmentQueuePage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold mb-2">
-            <Wrench className="w-3.5 h-3.5 text-civic-600" />
-            Field Operations & Department Dispatch Queue
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-50 text-orange-800 text-xs font-semibold mb-2">
+            <Wrench className="w-3.5 h-3.5 text-orange-600" />
+            BBMP & Parastatal Field Operations Dispatch
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
             Department Work Orders
           </h1>
           <p className="text-xs text-slate-500 mt-1">
-            Accept assigned tickets, deploy repair units, log site updates, and submit resolution proofs.
+            Claim assigned ward tickets, deploy repair teams, and submit completion proofs.
           </p>
         </div>
       </div>
@@ -119,7 +113,7 @@ export default function DepartmentQueuePage() {
                 : "bg-white text-slate-600 hover:bg-slate-50 border border-slate-200"
             }`}
           >
-            <span>{meta.label}</span>
+            <span>{meta.authorityCode}</span>
             <span className="text-[10px] px-1.5 py-0.5 rounded bg-white/20 text-current">
               {meta.defaultSlaHours}h SLA
             </span>
@@ -128,14 +122,17 @@ export default function DepartmentQueuePage() {
       </div>
 
       {/* Active Department Info Banner */}
-      <div className="bg-civic-50/70 border border-civic-200/80 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-700">
+      <div className="bg-orange-50/70 border border-orange-200/80 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-700">
         <div>
-          <span className="font-bold text-civic-900">{catMeta.departmentName}</span>
-          <p className="text-slate-500 text-[11px] mt-0.5">{catMeta.description}</p>
+          <div className="flex items-center gap-2">
+            <Building className="w-4 h-4 text-orange-600" />
+            <span className="font-bold text-orange-950">{catMeta.departmentName}</span>
+          </div>
+          <p className="text-slate-600 text-[11px] mt-0.5">{catMeta.description}</p>
         </div>
         <div className="flex items-center gap-3">
           <span className="font-semibold text-slate-900">{issues.length} active tickets</span>
-          <span className="bg-white border border-civic-200 px-2.5 py-1 rounded-lg text-civic-700 font-bold">
+          <span className="bg-white border border-orange-200 px-2.5 py-1 rounded-lg text-orange-800 font-bold">
             Target SLA: {catMeta.defaultSlaHours} Hours
           </span>
         </div>
@@ -155,9 +152,9 @@ export default function DepartmentQueuePage() {
               <thead className="bg-slate-50 text-slate-500 uppercase tracking-wider font-semibold border-b border-slate-200">
                 <tr>
                   <th className="px-5 py-3.5">Ticket</th>
-                  <th className="px-5 py-3.5">Issue Summary</th>
+                  <th className="px-5 py-3.5">Grievance Summary & Ward</th>
                   <th className="px-5 py-3.5">Status</th>
-                  <th className="px-5 py-3.5">SLA Deadline</th>
+                  <th className="px-5 py-3.5">SLA Countdown</th>
                   <th className="px-5 py-3.5">Upvotes</th>
                   <th className="px-5 py-3.5 text-right">Actions</th>
                 </tr>
@@ -171,8 +168,7 @@ export default function DepartmentQueuePage() {
 
                     <td className="px-5 py-4 max-w-xs">
                       <div className="font-bold text-slate-900 truncate">{issue.title}</div>
-                      <div className="text-[11px] text-slate-500 truncate flex items-center gap-1 mt-0.5">
-                        <MapPin className="w-3 h-3 text-slate-400 flex-shrink-0" />
+                      <div className="text-[11px] text-slate-500 truncate mt-0.5">
                         {issue.address}
                       </div>
                     </td>
@@ -234,7 +230,7 @@ export default function DepartmentQueuePage() {
                   Update Work Order: {activeIssue.ticketNumber}
                 </h3>
                 <p className="text-xs text-slate-500">
-                  Target status: <span className="font-bold text-civic-700">{newStatus}</span>
+                  Target status: <span className="font-bold text-orange-600">{newStatus}</span>
                 </p>
               </div>
               <button
@@ -248,19 +244,19 @@ export default function DepartmentQueuePage() {
             <form onSubmit={handleUpdateStatus} className="p-6 space-y-4 text-xs">
               <div>
                 <label className="block font-bold uppercase tracking-wider text-slate-700 mb-1">
-                  Operational Note / Log Entry <span className="text-red-500">*</span>
+                  Department Work Log / Notes <span className="text-red-500">*</span>
                 </label>
                 <textarea
                   required
                   rows={3}
                   placeholder={
                     newStatus === "RESOLVED"
-                      ? "Describe the repairs performed (e.g., filled pothole with hot asphalt, tested lighting ballast)..."
-                      : "Describe team dispatch details, truck number, and expected completion time..."
+                      ? "Detail the repairs completed (e.g., hot-mix asphalt patching completed, tested by BBMP ward engineer)..."
+                      : "Provide team dispatch details, vehicle number, and expected completion..."
                   }
                   value={actionNote}
                   onChange={(e) => setActionNote(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-civic-500/20 focus:border-civic-500 text-xs"
+                  className="w-full px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 text-xs"
                 />
               </div>
 
@@ -273,10 +269,10 @@ export default function DepartmentQueuePage() {
                     <Camera className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
                     <input
                       type="url"
-                      placeholder="https://... photo of completed work"
+                      placeholder="https://... photo link of completed work"
                       value={resolvedImageUrl}
                       onChange={(e) => setResolvedImageUrl(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-civic-500/20 focus:border-civic-500 text-xs"
+                      className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 text-xs"
                     />
                   </div>
                 </div>
@@ -293,7 +289,7 @@ export default function DepartmentQueuePage() {
                 <button
                   type="submit"
                   disabled={isUpdating}
-                  className="px-5 py-2 rounded-xl bg-civic-600 hover:bg-civic-700 text-white font-semibold shadow-sm disabled:opacity-50"
+                  className="px-5 py-2 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-semibold shadow-sm disabled:opacity-50"
                 >
                   {isUpdating ? "Saving..." : "Confirm Status Update"}
                 </button>
